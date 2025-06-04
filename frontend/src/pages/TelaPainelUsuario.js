@@ -166,8 +166,10 @@ const TelaPainelUsuario = ({ navigateTo }) => {
             <PopupNotificacao visivel={notificacao.visivel} mensagem={notificacao.mensagem} tipo={notificacao.tipo} aoFechar={() => setNotificacao({ visivel: false })} />
 
             <div className={styles.painelUsuarioCard + " bg-white p-8 rounded-xl shadow-2xl mb-8"}>
-                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 pb-4 border-b border-gray-200">
-                    <h2 className="text-3xl font-bold text-gray-800 mb-2 sm:mb-0">Painel do Usuário</h2>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', marginBottom: '1.5rem', paddingBottom: '1rem', borderBottom: '1px solid #e5e7eb' }}>
+                    <h2 className={styles.tituloDestaque} style={{ fontSize: '2rem', fontWeight: 'bold', color: '#1e293b', marginBottom: '0.5rem' }}>
+                        Painel do Usuário
+                    </h2>
                     {isAdmin && (
                         <Botao tipo="button" variante="sucesso" aoClicar={exportarCSV} classeAdicional="w-full sm:w-auto">
                             Exportar Dados (CSV)
@@ -176,26 +178,28 @@ const TelaPainelUsuario = ({ navigateTo }) => {
                 </div>
 
                 {editando ? (
-                    <form onSubmit={handleSubmit} className="space-y-6 animate-fadeIn">
+                    <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', animation: 'fadeIn 0.7s' }}>
                         <CampoEntrada id="nome" name="nome" label="Nome" valor={form.nome} aoMudar={handleChange} />
                         <CampoEntrada id="telefone" name="telefone" label="Telefone" valor={form.telefone} aoMudar={handleChange} />
-                        <hr className="my-4" />
-                        <p className="text-sm text-gray-600">Deixe os campos de senha em branco se não deseja alterá-la.</p>
+                        <hr style={{ margin: '1.5rem 0' }} />
+                        <p style={{ fontSize: '1rem', color: '#475569' }}>Deixe os campos de senha em branco se não deseja alterá-la.</p>
                         <CampoEntrada id="senhaAtual" name="senhaAtual" label="Senha Atual" tipo="password" valor={senhaAtual} aoMudar={e => setSenhaAtual(e.target.value)} />
                         <CampoEntrada id="novaSenha" name="novaSenha" label="Nova Senha" tipo="password" valor={novaSenha} aoMudar={e => setNovaSenha(e.target.value)} />
-                        <div className="flex gap-3 pt-2">
-                            <Botao tipo="submit" variante="primario" carregando={carregandoEdicao} classeAdicional="flex-1 sm:flex-none">Salvar Alterações</Botao>
+                        <div style={{ display: 'flex', gap: '1rem', paddingTop: '0.5rem' }}>
+                            <Botao tipo="submit" variante="primario" classeAdicional={styles.pulseBtn + " flex-1 sm:flex-none"} carregando={carregandoEdicao}>
+                                Salvar Alterações
+                            </Botao>
                             <Botao tipo="button" variante="secundario" aoClicar={handleCancel} classeAdicional="flex-1 sm:flex-none">Cancelar</Botao>
                         </div>
                     </form>
                 ) : (
-                    <div className="space-y-3 animate-fadeIn">
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', animation: 'fadeIn 0.7s' }}>
                         <p><strong>Nome:</strong> {usuario.nome}</p>
                         <p><strong>Email:</strong> {usuario.email}</p>
-                        <p><strong>Telefone:</strong> {usuario.telefone || <span className="italic text-gray-500">Não informado</span>}</p>
-                        <p><strong>Instituição:</strong> {usuario.fk_instituicao || <span className="italic text-gray-500">Não informada</span>}</p>
-                        <p><strong>Curso:</strong> {usuario.fk_curso || <span className="italic text-gray-500">Não informado</span>}</p>
-                        <div className="pt-4">
+                        <p><strong>Telefone:</strong> {usuario.telefone || <span style={{ fontStyle: 'italic', color: '#64748b' }}>Não informado</span>}</p>
+                        <p><strong>Instituição:</strong> {usuario.fk_instituicao || <span style={{ fontStyle: 'italic', color: '#64748b' }}>Não informada</span>}</p>
+                        <p><strong>Curso:</strong> {usuario.fk_curso || <span style={{ fontStyle: 'italic', color: '#64748b' }}>Não informado</span>}</p>
+                        <div style={{ paddingTop: '1rem' }}>
                             <Botao tipo="button" variante="primario" aoClicar={handleEdit}>Editar Perfil</Botao>
                         </div>
                     </div>
@@ -203,17 +207,17 @@ const TelaPainelUsuario = ({ navigateTo }) => {
             </div>
 
             <div className={styles.painelUsuarioCard + " bg-white p-8 rounded-xl shadow-2xl"}>
-                <h3 className="text-2xl font-semibold text-gray-800 mb-6 pb-4 border-b border-gray-200">Suas Avaliações</h3>
+                <h3 style={{ fontSize: '1.5rem', fontWeight: 600, color: '#1e293b', marginBottom: '1.5rem', paddingBottom: '1rem', borderBottom: '1px solid #e5e7eb' }}>Suas Avaliações</h3>
                 {carregandoAvaliacoes ? (
-                    <div className="text-center py-8">
-                        <svg className="animate-spin h-8 w-8 text-blue-500 mx-auto" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    <div className="text-center" style={{ padding: '2rem 0' }}>
+                        <svg style={{ animation: 'spin 1s linear infinite', height: '2rem', width: '2rem', color: '#2563eb', display: 'block', margin: '0 auto' }} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle style={{ opacity: 0.25 }} cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                            <path style={{ opacity: 0.75 }} fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                         </svg>
-                        <p className="mt-2 text-gray-600">Carregando suas avaliações...</p>
+                        <p style={{ marginTop: '0.5rem', color: '#475569' }}>Carregando suas avaliações...</p>
                     </div>
                 ) : (
-                    <ul className="space-y-6">
+                    <ul style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
                         {avaliacoes.length === 0 ? (
                             <li className="text-center text-gray-500 py-6 italic">Nenhuma avaliação encontrada.</li>
                         ) :

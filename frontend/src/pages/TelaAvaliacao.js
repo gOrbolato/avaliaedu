@@ -152,7 +152,9 @@ const TelaAvaliacao = ({ navigateTo }) => {
             <PopupNotificacao visivel={notificacao.visivel} mensagem={notificacao.mensagem} tipo={notificacao.tipo} aoFechar={() => setNotificacao({ visivel: false })} />
             <div className={styles.avaliacaoCard + ` w-full max-w-2xl bg-white p-8 sm:p-10 rounded-2xl shadow-2xl transition-all duration-700 ease-out ${isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}>
                 <div className="text-center mb-10">
-                    <h2 className="text-3xl sm:text-4xl font-bold text-blue-600">Avaliação Detalhada</h2>
+                    <h2 className={styles.tituloDestaque + " text-2xl font-bold mb-6"}>
+                        Avaliação Detalhada
+                    </h2>
                     <p className="mt-2 text-gray-600">Compartilhe sua experiência completa.</p>
                 </div>
                 <form onSubmit={handleSubmit} className="space-y-8">
@@ -228,8 +230,8 @@ const TelaAvaliacao = ({ navigateTo }) => {
                         />
                     </fieldset>
 
-                    <Botao tipo="submit" variante="primario" classeAdicional="w-full py-3 text-base mt-10" carregando={carregando}>
-                        {carregando ? 'Enviando Avaliação...' : 'Enviar Avaliação Detalhada'}
+                    <Botao tipo="submit" variante="primario" classeAdicional={styles.pulseBtn + " w-full py-3 text-base"} carregando={carregando}>
+                        Enviar Avaliação
                     </Botao>
                 </form>
             </div>

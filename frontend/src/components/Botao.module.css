@@ -1,32 +1,125 @@
 /* Estilos padronizados para o componente Botao */
 .botaoBase {
-    @apply flex justify-center items-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 transition-all duration-150 ease-in-out select-none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    border: 1px solid transparent;
+    border-radius: 0.375rem;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.04);
+    font-size: 1rem;
+    font-weight: 500;
+    outline: none;
+    transition: all 0.15s ease-in-out;
+    user-select: none;
+    cursor: pointer;
 }
 
 .primario {
-    @apply bg-blue-600 hover:bg-blue-700 text-white focus:ring-blue-500;
+    background: #2563eb;
+    color: #fff;
+    border-color: transparent;
+}
+
+.primario:hover {
+    background: #1d4ed8;
+}
+
+.primario:focus {
+    box-shadow: 0 0 0 2px #2563eb33;
 }
 
 .secundario {
-    @apply bg-gray-600 hover:bg-gray-700 text-white focus:ring-gray-500;
+    background: #4b5563;
+    color: #fff;
+    border-color: transparent;
+}
+
+.secundario:hover {
+    background: #374151;
+}
+
+.secundario:focus {
+    box-shadow: 0 0 0 2px #6b728033;
 }
 
 .perigo {
-    @apply bg-red-600 hover:bg-red-700 text-white focus:ring-red-500;
+    background: #dc2626;
+    color: #fff;
+    border-color: transparent;
+}
+
+.perigo:hover {
+    background: #b91c1c;
+}
+
+.perigo:focus {
+    box-shadow: 0 0 0 2px #dc262633;
 }
 
 .sucesso {
-    @apply bg-green-500 hover:bg-green-600 text-white focus:ring-green-400;
+    background: #22c55e;
+    color: #fff;
+    border-color: transparent;
+}
+
+.sucesso:hover {
+    background: #16a34a;
+}
+
+.sucesso:focus {
+    box-shadow: 0 0 0 2px #22c55e33;
 }
 
 .link {
-    @apply text-blue-600 hover:text-blue-700 hover:underline focus:ring-blue-500 shadow-none;
+    background: none;
+    color: #2563eb;
+    border: none;
+    box-shadow: none;
+    text-decoration: underline;
+}
+
+.link:hover {
+    color: #1d4ed8;
+    text-decoration: underline;
+}
+
+.link:focus {
+    box-shadow: 0 0 0 2px #2563eb33;
 }
 
 .carregando {
-    @apply opacity-60 cursor-not-allowed;
+    opacity: 0.6;
+    cursor: not-allowed;
 }
 
 .ativo {
-    @apply hover:opacity-90 active:scale-[0.98] active:opacity-100;
+    opacity: 1;
+}
+
+.ativo:hover {
+    opacity: 0.9;
+}
+
+.ativo:active {
+    transform: scale(0.98);
+    opacity: 1;
+}
+
+.pulseBtn {
+    animation: pulseBtnAnim 1.5s infinite;
+}
+
+@keyframes pulseBtnAnim {
+    0% {
+        box-shadow: 0 0 0 0 #6366f144;
+    }
+
+    70% {
+        box-shadow: 0 0 0 8px #6366f100;
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 #6366f100;
+    }
 }

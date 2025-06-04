@@ -83,3 +83,79 @@ legend {
     padding: 0 0.5rem;
     font-size: 1.1rem;
 }
+
+.tituloDestaque {
+    transition: color 0.2s, text-shadow 0.3s;
+}
+
+.tituloDestaque:hover {
+    color: #4338ca;
+    text-shadow: 0 2px 16px #6366f133;
+    animation: destaqueTitulo 0.5s;
+}
+
+@keyframes destaqueTitulo {
+    0% {
+        text-shadow: 0 0 0 #6366f133;
+    }
+
+    60% {
+        text-shadow: 0 4px 24px #6366f199;
+    }
+
+    100% {
+        text-shadow: 0 2px 16px #6366f133;
+    }
+}
+
+.listaFade li {
+    transition: color 0.2s, opacity 0.3s;
+    opacity: 0.85;
+    animation: fadeInList 0.7s both;
+}
+
+.listaFade li:hover {
+    color: #6366f1;
+    opacity: 1;
+    animation: fadeInListHover 0.4s;
+}
+
+@keyframes fadeInList {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 0.85;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInListHover {
+    from {
+        opacity: 0.85;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.pulseBtn {
+    animation: pulseBtnAnim 1.5s infinite;
+}
+
+@keyframes pulseBtnAnim {
+    0% {
+        box-shadow: 0 0 0 0 #6366f144;
+    }
+
+    70% {
+        box-shadow: 0 0 0 8px #6366f100;
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 #6366f100;
+    }
+}

@@ -4,11 +4,12 @@
 O AvaliaEdu é uma plataforma web colaborativa para avaliação de instituições de ensino, cursos e experiências acadêmicas. Permite que alunos avaliem, reavaliem e consultem informações sobre instituições, enquanto administradores têm acesso a relatórios, gráficos e exportação de dados para análise educacional.
 
 ## Tecnologias Utilizadas
-- **Frontend:** ReactJS (com Tailwind CSS)
+- **Frontend:** ReactJS (com CSS Modules e CSS puro/global)
 - **Backend:** Node.js + Express
 - **Banco de Dados:** MySQL
 - **Autenticação:** JWT (JSON Web Token)
 - **Gráficos:** Recharts
+- **Ícones:** react-icons
 - **Outros:** Fetch API, Context API, JWT, CSV export
 
 ## Funcionalidades
@@ -24,6 +25,15 @@ O AvaliaEdu é uma plataforma web colaborativa para avaliação de instituiçõe
   - Exportação de dados em CSV
   - Configuração do intervalo de reavaliação
   - Controle de acesso restrito a administradores
+- **Padronização visual:**
+  - Todas as telas principais utilizam CSS Modules para estilos modernos, responsivos e sem conflitos
+  - Não há mais dependência de TailwindCSS: todo o visual é feito com CSS puro (Modules e index.css)
+  - Uso de react-icons para ícones padronizados e modernos
+  - Animações, efeitos de hover, popups animados e responsividade aprimorada
+- **Segurança:**
+  - Middleware de autenticação JWT
+  - Middleware de verificação de admin para rotas sensíveis (`verificarAdmin`)
+  - Proteção de rotas de exportação e configuração
 
 ## Como rodar o sistema
 
@@ -33,7 +43,7 @@ O AvaliaEdu é uma plataforma web colaborativa para avaliação de instituiçõe
 
 ### 2. Configuração do Banco de Dados
 - Crie um banco de dados MySQL chamado `avaliaedu`.
-- Importe o schema/tabelas conforme necessário (não incluso neste README, mas pode ser gerado a partir dos controllers).
+- Importe o schema/tabelas conforme necessário (veja exemplo abaixo).
 - Configure o arquivo `.env` em `backend/` com as credenciais do seu MySQL:
   ```env
   DB_HOST=localhost
@@ -48,6 +58,8 @@ O AvaliaEdu é uma plataforma web colaborativa para avaliação de instituiçõe
 ```sh
 cd backend
 npm install
+# Recomendado: instalar bibliotecas extras para segurança e praticidade
+npm install cors helmet morgan express-rate-limit
 npm start
 ```
 O backend estará disponível em http://localhost:3001
@@ -60,15 +72,39 @@ npm start
 ```
 O frontend estará disponível em http://localhost:3000
 
-### 5. Usuário Administrador
-- O primeiro usuário cadastrado com o e-mail `admin@avaliaedu.com` será administrador.
-- Apenas administradores têm acesso ao painel admin e exportação de dados.
+## Principais Alterações Recentes
+- **Frontend agora 100% CSS puro:**
+  - Todas as classes utilitárias do Tailwind foram removidas do JSX
+  - Todos os arquivos `.module.css` usam apenas CSS tradicional, sem `@apply` ou diretivas do Tailwind
+  - O visual e responsividade são garantidos por CSS Modules e pelo arquivo `index.css` global
+- Padronização visual de todas as telas com CSS Modules
+- Uso de react-icons para ícones modernos
+- Animações, popups e responsividade aprimorada
+- Middleware `verificarAdmin` para rotas sensíveis (ex: configuração de reavaliação)
+- Proteção de rotas de exportação e configuração com autenticação e permissão de admin
+- Sugestão de uso de bibliotecas como `cors`, `helmet`, `morgan` e `express-rate-limit` para maior segurança
+
+## Estrutura de Pastas
+```
+backend/
+  controllers/
+  middlewares/
+  routes/
+  config/
+  server.js
+frontend/
+  src/
+    components/
+    pages/
+    App.js
+    index.js
+```
 
 ## Observações
-- O intervalo de reavaliação pode ser configurado pelo admin no painel administrativo.
-- O sistema permite reavaliação apenas após o intervalo definido (bimestral, trimestral, semestral, anual ou personalizado).
-- O backend pode ser facilmente adaptado para outros bancos relacionais.
-- Para produção, recomenda-se configurar variáveis de ambiente e HTTPS.
+- O envio de e-mail de confirmação é simulado no backend.
+- O admin é identificado automaticamente pelo e-mail `admin@avaliaedu.com` no cadastro.
+- Para customizações visuais, edite os arquivos `.module.css` em cada tela ou componente, ou o arquivo `src/index.css` para estilos globais.
+- Para adicionar novas funcionalidades (ex: comentários, notificações), crie novos controllers, rotas e middlewares conforme necessário.
 
 ## Melhorias Futuras
 - Upload de fotos/perfil

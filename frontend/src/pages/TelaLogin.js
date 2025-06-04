@@ -55,7 +55,7 @@ const TelaLogin = ({ navigateTo }) => {
             <div className={`sm:mx-auto sm:w-full sm:max-w-md transition-all duration-700 ease-out ${isVisible ? styles.fadeIn : styles.fadeOut}`}>
                 <div className="text-center mb-8">
                     <img className="mx-auto h-16 w-16 rounded-full shadow-lg border-4 border-blue-500 bg-white animate-bounce" src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Avatar Moderno" />
-                    <h2 className="mt-4 text-4xl font-extrabold text-blue-600 drop-shadow-lg">
+                    <h2 className={styles.tituloDestaque + " mt-4 text-4xl font-extrabold text-blue-600 drop-shadow-lg"}>
                         Avalia<span className="text-orange-500">Edu</span>
                     </h2>
                     <p className="mt-2 text-base text-gray-700 font-medium animate-fadeIn">
@@ -90,7 +90,7 @@ const TelaLogin = ({ navigateTo }) => {
                                 {mostrarSenha ? <FaEyeSlash size={20} /> : <FaEye size={20} />}
                             </button>
                         </div>
-                        <Botao tipo="submit" variante="primario" carregando={carregando} desabilitado={carregando} classeAdicional="w-full py-3 text-base shadow-lg hover:scale-105 transition-transform duration-200">
+                        <Botao tipo="submit" variante="primario" classeAdicional={styles.pulseBtn + " w-full py-3 text-base"} carregando={carregando}>
                             Entrar
                         </Botao>
                     </form>

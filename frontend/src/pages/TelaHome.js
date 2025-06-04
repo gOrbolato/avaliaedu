@@ -8,7 +8,7 @@ import { FaUniversity, FaSearch, FaStar, FaRegStar } from 'react-icons/fa';
 import styles from './TelaHome.module.css';
 
 // Substitua o SearchIcon pelo FaSearch para manter o padrão visual
-const SearchIcon = () => <FaSearch className="w-5 h-5 text-gray-400" />;
+const SearchIcon = () => <FaSearch style={{ width: '1.25rem', height: '1.25rem', color: '#9ca3af' }} />;
 
 const API_BASE_URL = 'http://localhost:3001/api';
 
@@ -26,6 +26,7 @@ const TelaHome = ({ navigateTo }) => {
     const [enviandoAvaliacao, setEnviandoAvaliacao] = useState(false);
     const [avaliacaoErro, setAvaliacaoErro] = useState('');
     const [showInitialGraph, setShowInitialGraph] = useState(true);
+    const [atualizarGrafico, setAtualizarGrafico] = useState(0); // Força atualização do gráfico
 
 
     const mostrarNotificacao = (mensagem, tipo = 'info', duracao = 4000) => {
@@ -61,6 +62,7 @@ const TelaHome = ({ navigateTo }) => {
             setInstituicoes([]);
         }
         setCarregandoInstituicoes(false);
+        setAtualizarGrafico(v => v + 1); // Atualiza gráfico após busca
     }, [termoPesquisa, filtroLocal, filtroCurso]);
 
     const handlePesquisar = (e) => {
@@ -138,6 +140,7 @@ const TelaHome = ({ navigateTo }) => {
                     ...prev,
                     [instituicaoId]: { isLoading: false, data: updatedData.success ? updatedData.avaliacoes : [] }
                 }));
+                setAtualizarGrafico(v => v + 1); // Atualiza gráfico após nova avaliação
 
             } else {
                 setAvaliacaoErro(data.message || 'Erro ao enviar avaliação.');
@@ -148,72 +151,70 @@ const TelaHome = ({ navigateTo }) => {
         setEnviandoAvaliacao(false);
     };
 
-    useEffect(() => {
-        const formSection = document.getElementById('search-form-section');
-        if (formSection) {
-            formSection.classList.remove('opacity-0', 'translate-y-5');
-            formSection.classList.add('opacity-100', 'translate-y-0');
-        }
-    }, []);
-
-
     return (
         <div className={`flex flex-col min-h-screen bg-gray-50 ${styles.homeContainer}`}> {/* Adicionado bg-gray-50 aqui também */}
             <PopupNotificacao visivel={notificacao.visivel} mensagem={notificacao.mensagem} tipo={notificacao.tipo} aoFechar={() => setNotificacao({ visivel: false })} />
 
-            <section
-                id="search-form-section"
-                className={`py-16 bg-gradient-to-br from-blue-600 to-indigo-700 text-white -mt-12 sm:-mt-16 rounded-b-3xl shadow-2xl relative z-10 opacity-0 translate-y-5 transform transition-all duration-700 ease-out ${styles.heroSection}`}
-            >
-                <div className={`absolute inset-0 bg-black opacity-20 rounded-b-3xl ${styles.heroOverlay}`}></div>
-                <div className={`container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 ${styles.heroContent}`}>
-                    <div className={`max-w-3xl mx-auto text-center mb-10 ${styles.heroTitleBox}`}>
-                        <h1 className={`text-4xl sm:text-5xl font-bold mb-4 leading-tight animate-fadeInDown ${styles.heroTitle}`} style={{ animationDelay: '0.1s' }}>
-                            Descubra, Avalie, Transforme.
-                        </h1>
-                        <p className={`text-lg sm:text-xl text-indigo-100 animate-fadeInDown ${styles.heroSubtitle}`} style={{ animationDelay: '0.3s' }}>
-                            Sua voz moldando o futuro da educação. Encontre e compartilhe experiências sobre instituições de ensino.
-                        </p>
-                    </div>
-                    <form onSubmit={handlePesquisar} className={`max-w-2xl mx-auto bg-white p-6 sm:p-8 rounded-xl shadow-2xl animate-fadeInUp ${styles.searchForm}`} style={{ animationDelay: '0.5s' }}>
-                        <h2 className={`text-2xl font-semibold text-gray-800 mb-6 text-center ${styles.searchTitle}`}>Encontre sua Instituição</h2>
+            {/* Seção institucional + pesquisa lado a lado */}
+            <section className={styles.institucionalSection}>
+                <div className={styles.institucionalTexto}>
+                    <h2 className={styles.institucionalTitulo}>
+                        Sua experiência transforma o futuro!
+                    </h2>
+                    <p className={styles.institucionalDescricao}>
+                        Já pensou em ajudar outros estudantes a escolher melhor onde estudar? Aqui você pode!
+                    </p>
+                    <ul className={styles.listaFade}>
+                        <li><strong>✔️ Avalie sua instituição:</strong> Conte como é o ambiente, os professores, a estrutura e o que faz a diferença no seu dia a dia.</li>
+                        <li><strong>✔️ Compartilhe sobre seu curso:</strong> Fale da grade, da coordenação, dos desafios e das oportunidades que encontrou.</li>
+                        <li><strong>✔️ Dê sua opinião sobre matérias:</strong> Ajude futuros alunos a entender o que esperar de cada disciplina e professor.</li>
+                    </ul>
+                    <p className={styles.institucionalChamada}>
+                        <strong>É simples, rápido e faz diferença!</strong> Sua avaliação fica disponível para todos, ajudando quem está começando a jornada acadêmica. Clique, avalie e transforme!
+                    </p>
+                </div>
+                {/* Área de pesquisa simplificada e visualmente destacada */}
+                <div className={styles.pesquisaBox}>
+                    <form onSubmit={handlePesquisar} className={styles.pesquisaForm}>
+                        <h2 className={styles.pesquisaTitulo}>Encontre sua Instituição</h2>
                         <CampoEntrada
-                            id="pesquisaInstituicao"
-                            label="Nome da Instituição, Curso ou Localização"
+                            id="termoPesquisa"
+                            label="Buscar por nome ou cidade"
                             valor={termoPesquisa}
-                            aoMudar={(e) => setTermoPesquisa(e.target.value)}
-                            placeholder="Ex: USP, Engenharia Civil, São Paulo..."
-                            icone={<SearchIcon />}
+                            aoMudar={e => setTermoPesquisa(e.target.value)}
+                            placeholder="Ex: USP, São Paulo, UnB..."
                         />
-                        <div className={`grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6 ${styles.filtersRow}`}>
-                            <CampoEntrada id="filtroLocal" label="Filtrar por Local" valor={filtroLocal} aoMudar={(e) => setFiltroLocal(e.target.value)} placeholder="Ex: Rio de Janeiro, RJ" />
-                            <CampoEntrada id="filtroCurso" label="Filtrar por Curso" valor={filtroCurso} aoMudar={(e) => setFiltroCurso(e.target.value)} placeholder="Ex: Medicina" />
-                        </div>
-                        <div className={`flex flex-col sm:flex-row gap-3 ${styles.buttonRow}`}>
-                            <Botao tipo="submit" variante="primario" classeAdicional="w-full sm:w-auto flex-grow py-2.5" carregando={carregandoInstituicoes}>
-                                Pesquisar Instituições
-                            </Botao>
-                        </div>
+                        <Botao tipo="submit" variante="primario" classeAdicional={styles.pulseBtn + " w-full py-2.5 mt-2"} carregando={carregandoInstituicoes}>
+                            Pesquisar Instituições
+                        </Botao>
                     </form>
                 </div>
             </section>
 
-            <section className="py-12">
-                <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            {/* Visão geral das avaliações (gráfico) sempre atualizado - mantém apenas a versão moderna */}
+            {showInitialGraph && !carregandoInstituicoes && instituicoes.length === 0 && (
+                <div className={styles.graficoBox}>
+                    <h2 className={styles.graficoTitulo}>Visão Geral das Avaliações</h2>
+                    <GraficoMediaAvaliacoes key={atualizarGrafico} />
+                </div>
+            )}
+
+            <section style={{ padding: '3rem 0' }}>
+                <div className="container">
                     {carregandoInstituicoes && (
-                        <div className="text-center p-10">
-                            <svg className="animate-spin h-10 w-10 text-blue-600 mx-auto mb-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        <div className="text-center" style={{ padding: '2.5rem' }}>
+                            <svg style={{ animation: 'spin 1s linear infinite', height: '2.5rem', width: '2.5rem', color: '#2563eb', display: 'block', margin: '0 auto 0.75rem' }} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                <circle style={{ opacity: 0.25 }} cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                <path style={{ opacity: 0.75 }} fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                             </svg>
-                            <p className="text-gray-600">Buscando instituições...</p>
+                            <p style={{ color: '#475569' }}>Buscando instituições...</p>
                         </div>
                     )}
 
                     {!carregandoInstituicoes && instituicoes.length > 0 && (
-                        <div className="max-w-3xl mx-auto bg-transparent p-0 sm:p-0 rounded-xl mt-8">
-                            <h3 className="text-2xl font-semibold text-gray-800 mb-6 border-b pb-3">Instituições Encontradas:</h3>
-                            <ul className="space-y-6">
+                        <div className="max-w-3xl" style={{ margin: '2rem auto 0', background: 'transparent', borderRadius: '1rem' }}>
+                            <h3 style={{ fontSize: '1.5rem', fontWeight: 600, color: '#1e293b', marginBottom: '1.5rem', borderBottom: '1px solid #e5e7eb', paddingBottom: '0.75rem' }}>Instituições Encontradas:</h3>
+                            <ul style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
                                 {instituicoes.map((inst, index) => (
                                     <li
                                         key={inst.pk_instituicao}
@@ -225,7 +226,7 @@ const TelaHome = ({ navigateTo }) => {
                                                 <h4 className="text-xl font-semibold text-blue-700">{inst.pk_instituicao}</h4>
                                                 <p className="text-sm text-gray-500">{inst.cidade} - {inst.estado}</p>
                                             </div>
-                                            <Botao aoClicar={() => toggleAvaliacoes(inst.pk_instituicao)} variante="secundario" classeAdicional="text-xs py-1.5 px-4 w-full sm:w-auto">
+                                            <Botao aoClicar={() => toggleAvaliacoes(inst.pk_instituicao)} variante="secundario" classeAdicional="text-xs py-1.5 px-4 w-full sm:w-auto pulseBtn">
                                                 {avaliacoesVisiveis[inst.pk_instituicao] && !avaliacoesVisiveis[inst.pk_instituicao]?.isLoading ? 'Esconder Avaliações' : 'Ver Avaliações'}
                                             </Botao>
                                         </div>
@@ -272,7 +273,7 @@ const TelaHome = ({ navigateTo }) => {
                                                             </select>
                                                         </div>
                                                         {avaliacaoErro && <p className="text-xs text-red-600 mb-2">{avaliacaoErro}</p>}
-                                                        <Botao tipo="submit" variante="primario" classeAdicional="w-full sm:w-auto text-sm py-2 px-4" carregando={enviandoAvaliacao}>
+                                                        <Botao tipo="submit" variante="primario" classeAdicional="w-full sm:w-auto text-sm py-2 px-4 pulseBtn" carregando={enviandoAvaliacao}>
                                                             {enviandoAvaliacao ? 'Enviando...' : 'Enviar Avaliação'}
                                                         </Botao>
                                                     </form>
@@ -282,13 +283,6 @@ const TelaHome = ({ navigateTo }) => {
                                     </li>
                                 ))}
                             </ul>
-                        </div>
-                    )}
-
-                    {showInitialGraph && !carregandoInstituicoes && instituicoes.length === 0 && (
-                        <div className="max-w-3xl mx-auto my-12 p-4 sm:p-6 bg-white shadow-xl rounded-xl animate-fadeInUp">
-                            <h2 className="text-2xl font-semibold text-gray-800 mb-6 text-center">Visão Geral das Avaliações</h2>
-                            <GraficoMediaAvaliacoes />
                         </div>
                     )}
 

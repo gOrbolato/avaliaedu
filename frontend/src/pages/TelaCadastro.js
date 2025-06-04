@@ -92,18 +92,18 @@ const TelaCadastro = ({ navigateTo }) => {
         <div className={styles.cadastroBg + " min-h-screen flex flex-col justify-center py-12 sm:px-6 lg:px-8"}>
             <PopupNotificacao visivel={notificacao.visivel} mensagem={notificacao.mensagem} tipo={notificacao.tipo} aoFechar={() => setNotificacao({ visivel: false })} />
 
-            <div className={`sm:mx-auto sm:w-full sm:max-w-2xl transition-all duration-700 ease-out ${isVisible ? styles.fadeIn : styles.fadeOut}`}>
-                <div className="text-center mb-8">
-                    <h2 className="mt-2 text-4xl font-bold text-blue-600">
+            <div className={styles.cadastroDestaque + " sm:mx-auto sm:w-full sm:max-w-2xl transition-all duration-700 ease-out " + (isVisible ? styles.fadeIn : styles.fadeOut)}>
+                <div className="text-center" style={{ marginBottom: '2rem' }}>
+                    <h2 className={styles.tituloDestaque} style={{ marginTop: '0.5rem', fontSize: '2.25rem', fontWeight: 'bold', color: '#2563eb' }}>
                         Crie sua Conta
                     </h2>
-                    <p className="mt-2 text-sm text-gray-600">
+                    <p style={{ marginTop: '0.5rem', fontSize: '1rem', color: '#475569' }}>
                         É rápido e fácil. Comece a transformar a educação!
                     </p>
                 </div>
-                <div className={styles.cadastroCard + " bg-white py-8 px-6 shadow-2xl rounded-xl sm:px-10"}>
-                    <form className="space-y-4" onSubmit={handleSubmit} noValidate> {/* Reduzido space-y */}
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4">
+                <div className={styles.cadastroCard}>
+                    <form style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }} onSubmit={handleSubmit} noValidate>
+                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem 1.5rem' }}>
                             <CampoEntrada id="nome" name="nome" label="Nome Completo" valor={formData.nome} aoMudar={handleChange} erro={erros.nome} autoComplete="name" />
                             <CampoEntrada id="idade" name="idade" label="Idade" tipo="number" valor={formData.idade} aoMudar={handleChange} erro={erros.idade} autoComplete="off" />
                             <CampoEntrada id="rg" name="rg" label="RG (Opcional)" valor={formData.rg} aoMudar={handleChange} erro={erros.rg} autoComplete="off" />
@@ -111,47 +111,45 @@ const TelaCadastro = ({ navigateTo }) => {
                         </div>
                         <CampoEntrada id="email" name="email" label="E-mail" tipo="email" valor={formData.email} aoMudar={handleChange} erro={erros.email} autoComplete="email" />
 
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4">
+                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem 1.5rem' }}>
                             <CampoEntrada id="instituicao" name="instituicao" label="Instituição de Ensino" valor={formData.instituicao} aoMudar={handleChange} erro={erros.instituicao} />
                             <CampoEntrada id="curso" name="curso" label="Curso" valor={formData.curso} aoMudar={handleChange} erro={erros.curso} />
                             <CampoEntrada id="cidade" name="cidade" label="Cidade da Instituição" valor={formData.cidade} aoMudar={handleChange} erro={erros.cidade} />
                             <CampoEntrada id="estado" name="estado" label="Estado (UF)" valor={formData.estado} aoMudar={handleChange} erro={erros.estado} />
                         </div>
                         <div>
-                            <label htmlFor="periodo" className="block text-sm font-medium text-gray-700 mb-1.5">Período</label>
+                            <label htmlFor="periodo" style={{ display: 'block', fontSize: '1rem', fontWeight: 500, color: '#334155', marginBottom: '0.4rem' }}>Período</label>
                             <select
                                 id="periodo"
                                 name="periodo"
                                 value={formData.periodo}
                                 onChange={handleChange}
-                                className={`mt-1 block w-full pl-3 pr-10 py-2.5 text-base border rounded-md shadow-sm
-                                            focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm
-                                            ${erros.periodo ? 'border-red-500' : 'border-gray-300'}`}
+                                style={{ marginTop: '0.25rem', width: '100%', padding: '0.7rem 1rem', fontSize: '1rem', borderRadius: '0.5rem', border: erros.periodo ? '1px solid #dc2626' : '1px solid #d1d5db', boxShadow: '0 1px 2px 0 rgba(0,0,0,0.04)' }}
                             >
                                 <option value="matutino">Matutino</option>
                                 <option value="vespertino">Vespertino</option>
                                 <option value="noturno">Noturno</option>
                                 <option value="integral">Integral</option>
                             </select>
-                            {erros.periodo && <p className="mt-1.5 text-xs text-red-600">{erros.periodo}</p>}
+                            {erros.periodo && <p style={{ marginTop: '0.4rem', fontSize: '0.85rem', color: '#dc2626' }}>{erros.periodo}</p>}
                         </div>
                         <CampoEntrada id="senha" name="senha" label="Senha" tipo="password" valor={formData.senha} aoMudar={handleChange} erro={erros.senha} autoComplete="new-password" />
                         <CampoEntrada id="confirmarSenha" name="confirmarSenha" label="Confirmar Senha" tipo="password" valor={formData.confirmarSenha} aoMudar={handleChange} erro={erros.confirmarSenha} autoComplete="new-password" />
 
                         {/* Removido o checkbox de mostrar senha pois está integrado no CampoEntrada */}
 
-                        <div className="flex items-start mt-6"> {/* Aumentado margin top */}
-                            <div className="flex items-center h-5">
-                                <input id="termos" name="termos" type="checkbox" checked={formData.termos} onChange={handleChange} className={`h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded ${erros.termos ? 'border-red-500' : ''}`} />
+                        <div style={{ display: 'flex', alignItems: 'start', marginTop: '1.5rem' }}>
+                            <div style={{ display: 'flex', alignItems: 'center', height: '1.25rem' }}>
+                                <input id="termos" name="termos" type="checkbox" checked={formData.termos} onChange={handleChange} style={{ height: '1rem', width: '1rem', accentColor: '#2563eb', borderRadius: '0.25rem', border: erros.termos ? '1px solid #dc2626' : '1px solid #d1d5db' }} />
                             </div>
-                            <div className="ml-3 text-sm">
-                                <label htmlFor="termos" className="font-medium text-gray-700">
-                                    Eu li e aceito os <button type="button" onClick={() => alert("Termos e Condições (Simulado - Implementar visualização real)")} className="text-blue-600 hover:text-blue-700 hover:underline">Termos e Condições</button>.
+                            <div style={{ marginLeft: '0.75rem', fontSize: '1rem' }}>
+                                <label htmlFor="termos" style={{ fontWeight: 500, color: '#334155' }}>
+                                    Eu li e aceito os <button type="button" onClick={() => alert("Termos e Condições (Simulado - Implementar visualização real)")} style={{ color: '#2563eb', textDecoration: 'underline', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}>Termos e Condições</button>.
                                 </label>
-                                {erros.termos && <p className="mt-1 text-xs text-red-600">{erros.termos}</p>}
+                                {erros.termos && <p style={{ marginTop: '0.25rem', fontSize: '0.85rem', color: '#dc2626' }}>{erros.termos}</p>}
                             </div>
                         </div>
-                        <Botao tipo="submit" variante="primario" carregando={carregando} desabilitado={carregando} classeAdicional="w-full mt-6 py-3 text-base"> {/* Aumentado margin top e botão */}
+                        <Botao tipo="submit" variante="primario" classeAdicional={styles.pulseBtn + " w-full py-3 text-base"} carregando={carregando}>
                             Cadastrar
                         </Botao>
                     </form>

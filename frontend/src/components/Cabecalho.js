@@ -13,16 +13,18 @@ const Cabecalho = ({ navigateTo }) => {
 
 
     return (
-        <header className="bg-white shadow-lg sticky top-0 z-50"> {/* Sombra mais pronunciada */}
-            <div className="container mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-20">
+        <header className="header-bg shadow-lg sticky top-0" style={{ zIndex: 50 }}>
+            <div className="container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: '5rem', paddingLeft: '1rem', paddingRight: '1rem' }}>
                 <div
                     onClick={() => navigateTo('home')}
-                    className="text-3xl font-bold text-blue-600 cursor-pointer hover:opacity-80 transition-opacity" // Tamanho e efeito no logo
+                    className="logo-title cursor-pointer"
+                    style={{ fontSize: '2rem', fontWeight: 'bold', color: '#2563eb', transition: 'opacity 0.2s', flex: '0 0 auto' }}
                     aria-label="Ir para a página inicial"
                 >
-                    Avalia<span className="text-orange-500">Edu</span>
+                    Avalia<span style={{ color: '#f59e42', paddingLeft: 0 }}>{'Edu'}</span>
                 </div>
-                <nav className="flex items-center space-x-2 sm:space-x-4">
+                <div style={{ flex: 1 }} />
+                <nav className="flex items-center" style={{ gap: '1rem', flex: '0 0 auto' }}>
                     {autenticado ? (
                         <>
                             {isAdmin && (
@@ -42,6 +44,7 @@ const Cabecalho = ({ navigateTo }) => {
                             <button onClick={() => navigateTo('login')} className={navLinkClasses}>
                                 Login
                             </button>
+                            <span style={{ display: 'inline-block', width: '0.75rem' }} />
                             <button onClick={() => navigateTo('cadastro')} className={buttonPrimaryClasses}>
                                 Cadastro
                             </button>
@@ -49,6 +52,20 @@ const Cabecalho = ({ navigateTo }) => {
                     )}
                 </nav>
             </div>
+            {/* Linha de separação dinâmica */}
+            <div style={{
+                height: '5px',
+                width: '100%',
+                background: 'linear-gradient(90deg, #2563eb 0%, #f59e42 100%)',
+                boxShadow: '0 2px 8px 0 rgba(37,99,235,0.10)',
+                animation: 'gradientMove 2s linear infinite alternate'
+            }} />
+            <style>{`
+                @keyframes gradientMove {
+                    0% { filter: brightness(1); }
+                    100% { filter: brightness(1.15); }
+                }
+            `}</style>
         </header>
     );
 };

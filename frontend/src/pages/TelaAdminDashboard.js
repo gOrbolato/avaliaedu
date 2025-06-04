@@ -197,11 +197,13 @@ const TelaAdminDashboard = ({ navigateTo }) => {
             <PopupNotificacao visivel={notificacao.visivel} mensagem={notificacao.mensagem} tipo={notificacao.tipo} aoFechar={() => setNotificacao({ visivel: false })} />
 
             <div className={`bg-white p-6 sm:p-8 rounded-xl shadow-2xl ${styles.dashboardBg}`}>
-                <h2 className="text-3xl font-bold text-gray-800 mb-8 pb-4 border-b border-gray-200">Painel Administrativo</h2>
+                <h2 className={styles.tituloDestaque} style={{ fontSize: '2rem', fontWeight: 'bold', color: '#1e293b', marginBottom: '2rem', paddingBottom: '1rem', borderBottom: '1px solid #e5e7eb' }}>
+                    Painel Administrativo
+                </h2>
 
-                <div className="mb-8 p-6 bg-gray-50 rounded-lg shadow">
-                    <h3 className="text-xl font-semibold text-gray-700 mb-4">Filtros de Relatório</h3>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 items-end">
+                <div style={{ marginBottom: '2rem', padding: '1.5rem', background: '#f1f5f9', borderRadius: '1rem', boxShadow: '0 2px 8px 0 rgba(31,38,135,0.10)' }}>
+                    <h3 style={{ fontSize: '1.25rem', fontWeight: 600, color: '#334155', marginBottom: '1rem' }}>Filtros de Relatório</h3>
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '1rem', alignItems: 'end' }}>
                         <CampoEntrada
                             id="filtroInstituicao"
                             label="Instituição"
@@ -230,9 +232,9 @@ const TelaAdminDashboard = ({ navigateTo }) => {
                 </div>
 
 
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-10">
-                    <div className="bg-gray-50 p-6 rounded-xl shadow-lg animate-fadeInUp" style={{ animationDelay: '0.1s' }}>
-                        <h3 className="text-lg font-semibold mb-3 text-gray-700">Distribuição de Notas</h3>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem', marginBottom: '2.5rem' }}>
+                    <div style={{ background: '#f1f5f9', padding: '1.5rem', borderRadius: '1rem', boxShadow: '0 2px 8px 0 rgba(31,38,135,0.10)', animation: 'fadeInUp 0.7s', animationDelay: '0.1s' }}>
+                        <h3 style={{ fontSize: '1.1rem', fontWeight: 600, color: '#334155', marginBottom: '0.75rem' }}>Distribuição de Notas</h3>
                         <ResponsiveContainer width="100%" height={300}>
                             <BarChart data={notasCount} margin={{ top: 5, right: 20, left: -20, bottom: 5 }}>
                                 <CartesianGrid strokeDasharray="3 3" stroke="#e0e0e0" />
@@ -242,10 +244,10 @@ const TelaAdminDashboard = ({ navigateTo }) => {
                                 <Bar dataKey="value" fill="#3B82F6" name="Quantidade" radius={[4, 4, 0, 0]} />
                             </BarChart>
                         </ResponsiveContainer>
-                        <div className="mt-3 text-sm text-gray-600 text-center">Total de avaliações: {totalAvaliacoes}</div>
+                        <div style={{ marginTop: '0.75rem', fontSize: '0.95rem', color: '#64748b', textAlign: 'center' }}>Total de avaliações: {totalAvaliacoes}</div>
                     </div>
-                    <div className="bg-gray-50 p-6 rounded-xl shadow-lg animate-fadeInUp" style={{ animationDelay: '0.2s' }}>
-                        <h3 className="text-lg font-semibold mb-3 text-gray-700">Avaliações por Instituição (Top 7)</h3>
+                    <div style={{ background: '#f1f5f9', padding: '1.5rem', borderRadius: '1rem', boxShadow: '0 2px 8px 0 rgba(31,38,135,0.10)', animation: 'fadeInUp 0.7s', animationDelay: '0.2s' }}>
+                        <h3 style={{ fontSize: '1.1rem', fontWeight: 600, color: '#334155', marginBottom: '0.75rem' }}>Avaliações por Instituição (Top 7)</h3>
                         <ResponsiveContainer width="100%" height={300}>
                             <PieChart>
                                 <Pie data={instituicaoData} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={100} label={entry => `${entry.name}: ${entry.percent}%`} labelLine={false}
@@ -260,13 +262,13 @@ const TelaAdminDashboard = ({ navigateTo }) => {
                     </div>
                 </div>
 
-                <div className="mb-10 p-6 bg-gray-50 rounded-xl shadow-lg animate-fadeInUp" style={{ animationDelay: '0.3s' }}>
+                <div style={{ marginBottom: '2.5rem', padding: '1.5rem', background: '#f1f5f9', borderRadius: '1rem', boxShadow: '0 2px 8px 0 rgba(31,38,135,0.10)', animation: 'fadeInUp 0.7s', animationDelay: '0.3s' }}>
                     <GraficoMediaAvaliacoes />
                 </div>
 
-                <div className="mb-10 p-6 bg-gray-50 rounded-xl shadow-lg animate-fadeInUp" style={{ animationDelay: '0.4s' }}>
-                    <h3 className="text-lg font-semibold mb-3 text-gray-700">Configuração do Intervalo de Reavaliação</h3>
-                    <div className="flex flex-col sm:flex-row gap-3 items-center">
+                <div style={{ marginBottom: '2.5rem', padding: '1.5rem', background: '#f1f5f9', borderRadius: '1rem', boxShadow: '0 2px 8px 0 rgba(31,38,135,0.10)', animation: 'fadeInUp 0.7s', animationDelay: '0.4s' }}>
+                    <h3 style={{ fontSize: '1.1rem', fontWeight: 600, color: '#334155', marginBottom: '0.75rem' }}>Configuração do Intervalo de Reavaliação</h3>
+                    <div style={{ display: 'flex', flexDirection: 'row', gap: '1rem', alignItems: 'center' }}>
                         <CampoEntrada
                             id="intervaloReavaliacao"
                             label="Intervalo (meses):"
@@ -275,16 +277,16 @@ const TelaAdminDashboard = ({ navigateTo }) => {
                             aoMudar={e => setNovoIntervaloInput(e.target.value)}
                             classeAdicionalInput="w-full sm:w-28"
                         />
-                        <Botao aoClicar={salvarConfig} variante="primario" carregando={carregandoConfig} classeAdicional="w-full sm:w-auto mt-2 sm:mt-0">
+                        <Botao aoClicar={salvarConfig} variante="primario" carregando={carregandoConfig} classeAdicional={styles.pulseBtn + " w-full sm:w-auto mt-2 sm:mt-0"}>
                             Salvar Intervalo
                         </Botao>
                     </div>
-                    <p className="text-xs text-gray-600 mt-2">Define de quanto em quanto tempo o usuário pode reavaliar uma instituição.</p>
+                    <p style={{ fontSize: '0.8rem', color: '#64748b', marginTop: '0.5rem' }}>Define de quanto em quanto tempo o usuário pode reavaliar uma instituição.</p>
                 </div>
 
-                <div className="mb-8 animate-fadeInUp" style={{ animationDelay: '0.5s' }}>
-                    <div className="flex justify-between items-center mb-4">
-                        <h3 className="text-xl font-semibold text-gray-700">Relatório Dinâmico de Avaliações</h3>
+                <div style={{ marginBottom: '2rem', animation: 'fadeInUp 0.7s', animationDelay: '0.5s' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
+                        <h3 style={{ fontSize: '1.25rem', fontWeight: 600, color: '#334155' }}>Relatório Dinâmico de Avaliações</h3>
                         <Botao aoClicar={exportarCSV} variante="sucesso" carregando={carregando && relatorioUrl === null} classeAdicional="text-sm py-2 px-3">
                             Exportar CSV Completo
                         </Botao>
