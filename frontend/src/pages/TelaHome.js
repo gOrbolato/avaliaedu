@@ -2,8 +2,10 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useAuth } from '../AuthContext';
 import GraficoMediaAvaliacoes from '../components/GraficoMediaAvaliacoes';
-// ... seus outros imports (Botao, CampoEntrada, PopupNotificacao) ...
-// import { useAuth } from '../AuthContext'; // Se precisar de dados do usuário ou token
+import PopupNotificacao from '../components/PopupNotificacao';
+import CampoEntrada from '../components/CampoEntrada';
+import Botao from '../components/Botao';
+import styles from '../styles/TelaHome.module.css';
 
 const API_BASE_URL = 'http://localhost:3001/api'; // Mova para um arquivo de config se preferir
 
@@ -205,3 +207,6 @@ const TelaHome = ({ navigateTo }) => {
 };
 
 export default TelaHome;
+
+// Exemplo de uso do estilo:
+// <section className={`bg-gradient-to-r ... ${styles.heroSection}`}> ... </section>

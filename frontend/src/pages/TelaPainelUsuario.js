@@ -3,6 +3,7 @@ import { useAuth } from '../AuthContext';
 import CampoEntrada from '../components/CampoEntrada';
 import Botao from '../components/Botao';
 import PopupNotificacao from '../components/PopupNotificacao';
+import styles from '../styles/TelaPainelUsuario.module.css';
 
 const API_BASE_URL = 'http://localhost:3001/api';
 

@@ -1,0 +1,16 @@
+/* Estilos específicos para a TelaHome */
+.heroSection {
+    animation: fadeInRight 0.3s ease-out forwards;
+}
+
+@keyframes fadeInRight {
+    from {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}

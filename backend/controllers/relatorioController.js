@@ -60,19 +60,69 @@ exports.downloadAvaliacoesCSV = async (req, res) => {
     }
 };
 
-// Configuração do intervalo de reavaliação (poderia vir do banco ou .env)
-let intervaloReavaliacaoMeses = 6; // padrão 6 meses
-exports.getConfigReavaliacao = (req, res) => {
-    res.json({ success: true, meses: intervaloReavaliacaoMeses });
+// --- Funções de Configuração de Reavaliação Atualizadas ---
+
+/**
+ * Busca a configuração do intervalo de reavaliação do banco de dados.
+ * Se não existir, cria com um valor padrão (6 meses).
+ */
+exports.getConfigReavaliacao = async (req, res) => {
+    const chaveConfig = 'intervaloReavaliacaoMeses';
+    const valorPadrao = 6; // Padrão de 6 meses
+    const descricaoPadrao = 'Intervalo em meses para permitir nova avaliação da mesma instituição pelo mesmo usuário.';
+
+    try {
+        const [rows] = await db.execute("SELECT valor FROM configuracoes WHERE chave = ?", [chaveConfig]);
+        if (rows.length > 0) {
+            res.json({ success: true, meses: parseInt(rows[0].valor, 10) });
+        } else {
+            // Se a configuração não existir, insere o valor padrão
+            await db.execute(
+                "INSERT INTO configuracoes (chave, valor, descricao) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE valor = valor", // ON DUPLICATE KEY UPDATE valor=valor para evitar erro se houver corrida e já tiver sido inserido
+                [chaveConfig, String(valorPadrao), descricaoPadrao]
+            );
+            console.log(`Configuração '${chaveConfig}' não encontrada, valor padrão de ${valorPadrao} meses foi definido no banco.`);
+            res.json({ success: true, meses: valorPadrao });
+        }
+    } catch (error) {
+        console.error("Erro ao buscar configuração de reavaliação:", error);
+        res.status(500).json({ success: false, message: "Erro ao buscar configuração de reavaliação." });
+    }
 };
-exports.setConfigReavaliacao = (req, res) => {
+
+/**
+ * Define/Atualiza a configuração do intervalo de reavaliação no banco de dados.
+ * Apenas administradores podem realizar esta ação.
+ */
+exports.setConfigReavaliacao = async (req, res) => {
+    // Verifica se o usuário é admin (vem do middleware verificarToken)
     if (!req.usuario || !req.usuario.admin) {
-        return res.status(403).json({ success: false, message: 'Apenas administradores.' });
+        return res.status(403).json({ success: false, message: 'Acesso negado. Apenas administradores podem alterar esta configuração.' });
     }
+
     const { meses } = req.body;
-    if (!meses || isNaN(meses) || meses < 1) {
-        return res.status(400).json({ success: false, message: 'Valor inválido.' });
+    const chaveConfig = 'intervaloReavaliacaoMeses';
+    const descricaoPadrao = 'Intervalo em meses para permitir nova avaliação da mesma instituição pelo mesmo usuário.';
+
+    if (meses === undefined || isNaN(meses) || Number(meses) < 1) {
+        return res.status(400).json({ success: false, message: 'Valor para "meses" é inválido. Deve ser um número maior ou igual a 1.' });
     }
-    intervaloReavaliacaoMeses = Number(meses);
-    res.json({ success: true, meses: intervaloReavaliacaoMeses });
+
+    const valorMeses = String(Number(meses));
+
+    try {
+        // UPSERT: Atualiza se a chave existir, insere se não existir.
+        const sql = `
+            INSERT INTO configuracoes (chave, valor, descricao)
+            VALUES (?, ?, ?)
+            ON DUPLICATE KEY UPDATE valor = ?, ultima_modificacao = CURRENT_TIMESTAMP;
+        `;
+        await db.execute(sql, [chaveConfig, valorMeses, descricaoPadrao, valorMeses]);
+
+        console.log(`Configuração '${chaveConfig}' atualizada para ${valorMeses} meses por admin: ${req.usuario.email}`);
+        res.json({ success: true, meses: Number(valorMeses), message: 'Configuração do intervalo de reavaliação atualizada com sucesso!' });
+    } catch (error) {
+        console.error("Erro ao salvar configuração de reavaliação:", error);
+        res.status(500).json({ success: false, message: 'Erro interno ao salvar configuração de reavaliação.' });
+    }
 };

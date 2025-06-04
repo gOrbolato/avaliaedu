@@ -3,6 +3,7 @@ import { useAuth } from '../AuthContext';
 import GraficoMediaAvaliacoes from '../components/GraficoMediaAvaliacoes';
 import PopupNotificacao from '../components/PopupNotificacao';
 import { PieChart, Pie, Cell, Tooltip, BarChart, Bar, XAxis, YAxis, CartesianGrid, Legend, ResponsiveContainer } from 'recharts';
+import styles from '../styles/TelaAdminDashboard.module.css';
 
 const API_BASE_URL = 'http://localhost:3001/api';
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#A020F0'];

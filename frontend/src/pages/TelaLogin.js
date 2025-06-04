@@ -3,6 +3,7 @@ import { useAuth } from '../AuthContext';
 import CampoEntrada from '../components/CampoEntrada';
 import Botao from '../components/Botao';
 import PopupNotificacao from '../components/PopupNotificacao';
+import styles from '../styles/TelaLogin.module.css';
 
 const TelaLogin = ({ navigateTo }) => {
     const [email, setEmail] = useState('');
@@ -96,5 +97,8 @@ const TelaLogin = ({ navigateTo }) => {
         </div>
     );
 };
+
+// Exemplo de uso do estilo:
+// <div className={styles.loginContainer}> ... </div>
 
 export default TelaLogin;

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useAuth } from '../AuthContext';
 import Botao from '../components/Botao';
+import styles from '../styles/TelaVerificacaoEmail.module.css';
 
 const TelaVerificacaoEmail = ({ navigateTo, pageData }) => {
     const token = pageData?.token;
@@ -67,3 +68,6 @@ const TelaVerificacaoEmail = ({ navigateTo, pageData }) => {
 };
 
 export default TelaVerificacaoEmail;
+
+// Exemplo de uso do estilo:
+// <div className={styles.verificacaoEmailContainer}> ... </div>
