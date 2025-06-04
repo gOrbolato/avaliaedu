@@ -1,0 +1,99 @@
+/* Estilos modernos e interativos para a TelaHome */
+
+.heroSection {
+    background: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%);
+    border-radius: 0 0 2rem 2rem;
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.18);
+    position: relative;
+    overflow: hidden;
+    animation: fadeInDown 0.7s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-40px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fadeInUp {
+    animation: fadeInUp 0.7s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.cardInstituicao {
+    transition: box-shadow 0.3s, transform 0.3s;
+    box-shadow: 0 4px 24px 0 rgba(59, 130, 246, 0.10);
+    border-radius: 1.25rem;
+    background: #fff;
+    border: 1px solid #e0e7ef;
+}
+
+.cardInstituicao:hover {
+    box-shadow: 0 8px 32px 0 rgba(99, 102, 241, 0.18);
+    transform: translateY(-6px) scale(1.02);
+}
+
+.iconeInstituicao {
+    color: #6366f1;
+    background: #e0e7ff;
+    border-radius: 50%;
+    padding: 0.5rem;
+    margin-right: 0.75rem;
+    font-size: 2rem;
+    box-shadow: 0 2px 8px 0 rgba(99, 102, 241, 0.10);
+}
+
+.avaliacaoEstrela {
+    color: #f59e42;
+    font-size: 1.1rem;
+    margin-right: 2px;
+}
+
+.popupNotificacao {
+    animation: popupBounce 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+@keyframes popupBounce {
+    0% {
+        transform: scale(0.9);
+        opacity: 0.7;
+    }
+
+    60% {
+        transform: scale(1.05);
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* Animação para loading e feedbacks */
+.loadingSpinner {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    100% {
+        transform: rotate(360deg);
+    }
+}

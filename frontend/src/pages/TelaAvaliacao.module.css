@@ -1,0 +1,85 @@
+/* Estilo padronizado e moderno para a tela de avaliação detalhada */
+
+.avaliacaoBg {
+    background: linear-gradient(135deg, #f0f4f8 0%, #e0e7ff 100%);
+    min-height: 100vh;
+    transition: background 0.5s;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.avaliacaoCard {
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.18);
+    border-radius: 1.5rem;
+    border-top: 8px solid #3b82f6;
+    animation: fadeInUp 0.7s cubic-bezier(0.23, 1, 0.32, 1);
+    background: #fff;
+}
+
+.fadeInUp {
+    animation: fadeInUp 0.7s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.popupNotificacao {
+    animation: popupBounce 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+@keyframes popupBounce {
+    0% {
+        transform: scale(0.9);
+        opacity: 0.7;
+    }
+
+    60% {
+        transform: scale(1.05);
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.ratingStar {
+    color: #f59e42;
+    font-size: 1.5rem;
+    transition: transform 0.15s, color 0.15s;
+}
+
+.ratingStarInactive {
+    color: #e5e7eb;
+}
+
+.ratingStar:hover,
+.ratingStar:focus {
+    transform: scale(1.2);
+    color: #fbbf24;
+}
+
+fieldset {
+    border: 1px solid #e5e7eb;
+    border-radius: 1rem;
+    margin-bottom: 1.5rem;
+    background: #f9fafb;
+}
+
+legend {
+    font-weight: 600;
+    color: #2563eb;
+    padding: 0 0.5rem;
+    font-size: 1.1rem;
+}

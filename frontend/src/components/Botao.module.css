@@ -1,0 +1,32 @@
+/* Estilos padronizados para o componente Botao */
+.botaoBase {
+    @apply flex justify-center items-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 transition-all duration-150 ease-in-out select-none;
+}
+
+.primario {
+    @apply bg-blue-600 hover:bg-blue-700 text-white focus:ring-blue-500;
+}
+
+.secundario {
+    @apply bg-gray-600 hover:bg-gray-700 text-white focus:ring-gray-500;
+}
+
+.perigo {
+    @apply bg-red-600 hover:bg-red-700 text-white focus:ring-red-500;
+}
+
+.sucesso {
+    @apply bg-green-500 hover:bg-green-600 text-white focus:ring-green-400;
+}
+
+.link {
+    @apply text-blue-600 hover:text-blue-700 hover:underline focus:ring-blue-500 shadow-none;
+}
+
+.carregando {
+    @apply opacity-60 cursor-not-allowed;
+}
+
+.ativo {
+    @apply hover:opacity-90 active:scale-[0.98] active:opacity-100;
+}
