@@ -2,7 +2,8 @@
 import React, { Suspense } from 'react'; // Adicionado Suspense se for usar React.lazy
 import { AuthProvider } from './AuthContext';
 import Cabecalho from './components/Cabecalho';
-import Rodape from './components/Rodape';
+import Rodape from './components/Rodape'; // Corrigido: Rodape institucional padrão
+import RodapeHome from './components/RodapeHome'; // Rodape especial da home
 // Importações de página
 import TelaHome from './pages/TelaHome';
 import TelaLogin from './pages/TelaLogin';
@@ -35,18 +36,18 @@ const App = () => {
     const handleHashChange = () => {
       const hash = window.location.hash.substring(1) || 'home';
       const [pageName, param] = hash.split('/');
-      
+
       setCurrentPage(pageName);
       setAnimationKey(prevKey => prevKey + 1); // Muda a chave para re-animar
 
       let newData = null;
       if (pageName === 'verificar-email' && param) {
         newData = { token: param };
-      } else if (pageName === 'aguardando-confirmacao' && pageData?.email) { 
+      } else if (pageName === 'aguardando-confirmacao' && pageData?.email) {
         // Mantém pageData.email se já existia para aguardando-confirmacao
         newData = { email: pageData.email };
       }
-      
+
       if (param && pageName === 'verificar-email') {
         setPageData({ token: param });
       } else if (pageName === 'aguardando-confirmacao') {
@@ -54,9 +55,9 @@ const App = () => {
         // Se não, e se há um e-mail na navegação (embora não típico para esta rota), usa-o
         // Esta parte pode precisar de ajuste dependendo de como `pageData` é passado para `aguardando-confirmacao`
         if (pageData?.email) {
-            setPageData(currentData => ({ ...currentData, email: currentData.email }));
+          setPageData(currentData => ({ ...currentData, email: currentData.email }));
         } else if (typeof param === 'string' && param.includes('@')) { // Exemplo se o email viesse no hash
-            setPageData({ email: param });
+          setPageData({ email: param });
         }
       }
       else {
@@ -94,13 +95,12 @@ const App = () => {
 
   return (
     <AuthProvider navigateTo={navigateTo}>
-      <div className="flex flex-col min-h-screen font-sans bg-gray-50"> {/* Adicionado bg-gray-50 aqui */}
+      <div className="flex flex-col min-h-screen font-sans bg-gray-50">
         <Cabecalho navigateTo={navigateTo} />
-        {/* Adiciona uma div com key para a animação de transição de página */}
-        <main key={animationKey} className="flex-grow animate-fadeIn"> 
+        <main key={animationKey} className="flex-grow animate-fadeIn">
           {renderPage()}
         </main>
-        <Rodape />
+        {currentPage === 'home' ? <RodapeHome /> : <Rodape />} {/* RodapeHome só na home, Rodape institucional nas demais */}
       </div>
     </AuthProvider>
   );

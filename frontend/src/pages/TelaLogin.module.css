@@ -1,178 +1,67 @@
-/* Estilo padronizado e moderno para a tela de login */
-
-.loginBg {
-    background: linear-gradient(135deg, #f0f4f8 0%, #e0e7ff 100%);
-    min-height: 100vh;
-    transition: background 0.5s;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
-.loginCard {
-    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.18);
-    border-radius: 1.5rem;
-    border-top: 8px solid #3b82f6;
-    animation: fadeInUp 0.7s cubic-bezier(0.23, 1, 0.32, 1);
-    background: #fff;
-}
-
-.fadeIn {
-    opacity: 1;
-    transform: translateY(0);
-    transition: opacity 0.7s, transform 0.7s;
-}
-
-.fadeOut {
-    opacity: 0;
-    transform: translateY(40px);
-    transition: opacity 0.7s, transform 0.7s;
-}
-
 @keyframes fadeInUp {
     from {
         opacity: 0;
         transform: translateY(40px);
     }
-
     to {
         opacity: 1;
         transform: translateY(0);
     }
 }
 
-/* Animação para popups */
 @keyframes popupBounce {
-    0% {
-        transform: scale(0.9);
-        opacity: 0.7;
-    }
+    0% { transform: scale(0.9); opacity: 0.7; }
+    60% { transform: scale(1.05); opacity: 1; }
+    100% { transform: scale(1); opacity: 1; }
+}
 
-    60% {
-        transform: scale(1.05);
-        opacity: 1;
-    }
+@keyframes destaqueTitulo {
+    0% { text-shadow: 0 0 0 #6366f133; }
+    60% { text-shadow: 0 4px 24px #6366f199; }
+    100% { text-shadow: 0 2px 16px #6366f133; }
+}
 
-    100% {
-        transform: scale(1);
-        opacity: 1;
-    }
+@keyframes pulseBtnAnim {
+    0% { box-shadow: 0 0 0 0 #6366f144; }
+    70% { box-shadow: 0 0 0 10px #6366f100; }
+    100% { box-shadow: 0 0 0 0 #6366f100; }
+}
+
+/* Estilos dos componentes */
+.loginBg {
+    background: linear-gradient(135deg, #f0f4f8 0%, #e0e7ff 100%);
+    transition: background 0.5s;
+}
+
+.loginCard {
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.18);
+    border-top: 6px solid #3b82f6;
+    animation: fadeInUp 0.7s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 .popupNotificacao {
     animation: popupBounce 0.4s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
-/* Efeito para botão de mostrar senha */
 .senhaToggleBtn {
     position: absolute;
-    right: 0.75rem;
-    top: 2.25rem;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
     color: #a0aec0;
-    background: none;
-    border: none;
     cursor: pointer;
     transition: color 0.2s;
     z-index: 2;
 }
-
 .senhaToggleBtn:hover {
     color: #2563eb;
 }
 
-/* Avatar animado */
-.avatarAnimado {
-    animation: bounce 1.2s infinite alternate;
-    box-shadow: 0 4px 24px 0 rgba(59, 130, 246, 0.10);
-}
-
-@keyframes bounce {
-    0% {
-        transform: translateY(0);
-    }
-
-    100% {
-        transform: translateY(-10px);
-    }
-}
-
-/* Estilos específicos para a TelaLogin */
-.loginContainer {
-    /* Exemplo: sobrescrever algo do Tailwind ou adicionar animação */
-}
-
-.tituloDestaque {
-    transition: color 0.2s, text-shadow 0.3s;
-}
-
 .tituloDestaque:hover {
     color: #4338ca;
-    text-shadow: 0 2px 16px #6366f133;
     animation: destaqueTitulo 0.5s;
 }
 
-@keyframes destaqueTitulo {
-    0% {
-        text-shadow: 0 0 0 #6366f133;
-    }
-
-    60% {
-        text-shadow: 0 4px 24px #6366f199;
-    }
-
-    100% {
-        text-shadow: 0 2px 16px #6366f133;
-    }
-}
-
-.listaFade li {
-    transition: color 0.2s, opacity 0.3s;
-    opacity: 0.85;
-    animation: fadeInList 0.7s both;
-}
-
-.listaFade li:hover {
-    color: #6366f1;
-    opacity: 1;
-    animation: fadeInListHover 0.4s;
-}
-
-@keyframes fadeInList {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-
-    to {
-        opacity: 0.85;
-        transform: translateY(0);
-    }
-}
-
-@keyframes fadeInListHover {
-    from {
-        opacity: 0.85;
-    }
-
-    to {
-        opacity: 1;
-    }
-}
-
 .pulseBtn {
-    animation: pulseBtnAnim 1.5s infinite;
-}
-
-@keyframes pulseBtnAnim {
-    0% {
-        box-shadow: 0 0 0 0 #6366f144;
-    }
-
-    70% {
-        box-shadow: 0 0 0 8px #6366f100;
-    }
-
-    100% {
-        box-shadow: 0 0 0 0 #6366f100;
-    }
+    animation: pulseBtnAnim 2s infinite;
 }
